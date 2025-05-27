@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Accueil Réparateur</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div th:replace="layout/header :: header"></div>
+
+    <div class="container mt-4">
+        <h2>Bienvenue, Réparateur !</h2>
+        <p>Voici les fonctionnalités disponibles :</p>
+        <div class="list-group">
+            <a th:href="@{/reparateur/clients}" class="list-group-item list-group-item-action">Gérer mes clients</a>
+            <a th:href="@{/reparateur/appareils}" class="list-group-item list-group-item-action">Gérer les appareils de mes clients</a>
+            <a th:href="@{/reparateur/reparations}" class="list-group-item list-group-item-action">Gérer mes réparations</a>
+            <a th:href="@{/reparateur/reparations/gains}" class="list-group-item list-group-item-action">Consulter mes gains</a>
+        </div>
+    </div>
+
+    <div th:replace="layout/footer :: footer"></div>
+
+    <script th:src="@{/js/scripts.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout/base :: layout">
+<head>
+    <title>Liste des Appareils</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Mes Appareils</h2>
+    <a class="btn btn-success mb-3" th:href="@{/reparateur/appareils/new}">Ajouter un Appareil</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Modèle</th>
+                <th>Client</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="appareil : ${appareils}">
+                <td th:text="${appareil.nom}"></td>
+                <td th:text="${appareil.modele}"></td>
+                <td th:text="${appareil.client.nom + ' ' + appareil.client.prenom}"></td>
+                <td>
+                    <a class="btn btn-sm btn-primary" th:href="@{'/reparateur/appareils/edit/' + ${appareil.id}}">Modifier</a>
+                    <a class="btn btn-sm btn-danger" th:href="@{'/reparateur/appareils/delete/' + ${appareil.id}}" onclick="return confirm('Confirmer la suppression ?');">Supprimer</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

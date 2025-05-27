@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/base :: layout(content = ~{::section})">
+<section>
+    <div class="container mt-5">
+        <h2 th:text="${reparation.id != null} ? 'Modifier la Réparation' : 'Ajouter une Réparation'"></h2>
+        <form th:action="@{/admin/reparations/save}" th:object="${reparation}" method="post">
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="mb-3">
+                <label class="form-label">Appareil</label>
+                <select class="form-select" th:field="*{appareil}">
+                    <option th:each="a : ${appareils}" th:value="${a.id}" th:text="${a.marque + ' - ' + a.modele}"></option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Réparateur</label>
+                <select class="form-select" th:field="*{reparateur}">
+                    <option th:each="r : ${reparateurs}" th:value="${r.id}" th:text="${r.nom + ' ' + r.prenom}"></option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Statut</label>
+                <select class="form-select" th:field="*{statut}">
+                    <option th:each="s : ${T(reparation.dao.entities.enums.Statut).values()}" th:value="${s}" th:text="${s}"></option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Prix</label>
+                <input type="number" step="0.01" class="form-control" th:field="*{prix}" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <a th:href="@{/admin/reparations}" class="btn btn-secondary">Annuler</a>
+        </form>
+    </div>
+</section>
+</html>

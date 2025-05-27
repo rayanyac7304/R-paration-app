@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/base :: layout(content = ~{::section})">
+      
+<section>
+
+    <div class="container mt-5">
+        <h2 class="mb-4">Tableau de bord - Admin</h2>
+
+        <div class="row text-center">
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm p-3">
+                    <h5>Réparations</h5>
+                    <p class="fs-4 fw-bold text-primary" th:text="${totalReparations}">0</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm p-3">
+                    <h5>Clients</h5>
+                    <p class="fs-4 fw-bold text-success" th:text="${totalClients}">0</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm p-3">
+                    <h5>Réparateurs</h5>
+                    <p class="fs-4 fw-bold text-warning" th:text="${totalReparateurs}">0</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm p-3">
+                    <h5>Gains totaux</h5>
+                    <p class="fs-4 fw-bold text-danger">
+                        <span th:text="${gainTotal}">0</span> MAD
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</html>

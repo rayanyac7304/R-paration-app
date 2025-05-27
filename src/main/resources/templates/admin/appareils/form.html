@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/base :: layout(content = ~{::section})">
+<section>
+    <div class="container mt-5">
+        <h2 th:text="${appareil.id} != null ? 'Modifier Appareil' : 'Ajouter un nouvel appareil'">Appareil</h2>
+
+        <form th:action="@{/admin/appareils/save}" th:object="${appareil}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+
+            <div class="mb-3">
+                <label for="nom" class="form-label">Nom de l'appareil</label>
+                <input type="text" class="form-control" id="nom" th:field="*{nom}" required/>
+            </div>
+
+            <div class="mb-3">
+                <label for="probleme" class="form-label">Problème</label>
+                <select class="form-select" id="probleme" th:field="*{probleme}">
+                    <option th:each="p : ${T(reparation.dao.entities.enums.Probleme).values()}"
+                            th:value="${p}" th:text="${p}">Problème</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="client" class="form-label">Client associé</label>
+                <select class="form-select" id="client" th:field="*{client.id}" required>
+                    <option th:each="c : ${clients}" th:value="${c.id}" th:text="${c.nom + ' ' + c.prenom}"></option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <a th:href="@{/admin/appareils}" class="btn btn-secondary">Annuler</a>
+        </form>
+    </div>
+</section>
+</html>

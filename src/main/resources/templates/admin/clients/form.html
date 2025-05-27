@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/base :: layout(content = ~{::section})">
+<section>
+    <div class="container mt-5">
+        <h2 th:text="${client.id != null} ? 'Modifier le Client' : 'Ajouter un Client'"></h2>
+        <form th:action="@{/admin/clients/save}" th:object="${client}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+
+            <div class="mb-3">
+                <label class="form-label">Nom</label>
+                <input type="text" class="form-control" th:field="*{nom}" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Prénom</label>
+                <input type="text" class="form-control" th:field="*{prenom}" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Téléphone</label>
+                <input type="text" class="form-control" th:field="*{telephone}" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <a th:href="@{/admin/clients}" class="btn btn-secondary">Annuler</a>
+        </form>
+    </div>
+</section>
+</html>

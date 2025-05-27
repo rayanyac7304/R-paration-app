@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout/base :: layout">
+<head>
+    <title>Ajouter ou Modifier un Appareil</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 th:text="${appareil.id == null} ? 'Ajouter un nouvel appareil' : 'Modifier l\'appareil'"></h2>
+    <form th:action="@{/reparateur/appareils/save}" th:object="${appareil}" method="post">
+        <div class="mb-3">
+            <label class="form-label">Nom</label>
+            <input type="text" class="form-control" th:field="*{nom}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Modèle</label>
+            <input type="text" class="form-control" th:field="*{modele}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Client</label>
+            <select class="form-select" th:field="*{client.id}">
+                <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.nom + ' ' + client.prenom}"></option>
+            </select>
+        </div>
+        <input type="hidden" th:field="*{id}"/>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </form>
+</div>
+</body>
+</html>

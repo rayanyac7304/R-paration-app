@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout/base :: layout">
+<head>
+    <title>Mes Gains</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Mes Gains</h2>
+
+    <div class="alert alert-info" role="alert">
+        <strong>Total de vos gains :</strong> 
+        <span th:text="${gain} + ' MAD'"></span>
+    </div>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Appareil</th>
+                <th>Problème</th>
+                <th>Coût Réparation</th>
+                <th>Date</th>
+                <th>Statut</th>
+                <th>Part (10%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="rep : ${reparations}">
+                <td th:text="${rep.appareil.designation}"></td>
+                <td th:text="${rep.probleme}"></td>
+                <td th:text="${rep.cout} + ' MAD'"></td>
+                <td th:text="${#dates.format(rep.dateCreation, 'dd/MM/yyyy')}"></td>
+                <td th:text="${rep.statut}"></td>
+                <td th:text="${#numbers.formatDecimal(rep.cout * 0.1, 1, 'POINT', 2, 'NONE')} + ' MAD'"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

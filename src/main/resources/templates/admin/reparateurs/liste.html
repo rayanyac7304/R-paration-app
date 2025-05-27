@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/base :: layout(content = ~{::section})">
+<section>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Liste des Réparateurs</h2>
+            <a class="btn btn-success" th:href="@{/admin/reparateurs/form}">Ajouter un réparateur</a>
+        </div>
+
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>CIN</th>
+                <th>Login</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reparateur : ${reparateurs}">
+                <td th:text="${reparateur.id}">1</td>
+                <td th:text="${reparateur.nom}">Nom</td>
+                <td th:text="${reparateur.prenom}">Prénom</td>
+                <td th:text="${reparateur.cin}">CIN</td>
+                <td th:text="${reparateur.login}">Login</td>
+                <td>
+                    <a th:href="@{'/admin/reparateurs/form?id=' + ${reparateur.id}}" class="btn btn-sm btn-primary">Modifier</a>
+                    <a th:href="@{'/admin/reparateurs/delete/' + ${reparateur.id}}"
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('Confirmer la suppression de ce réparateur ?')">
+                        Supprimer
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</html>

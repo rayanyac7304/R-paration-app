@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/base :: layout(content = ~{::section})">
+<section>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Liste des Appareils</h2>
+            <a class="btn btn-success" th:href="@{/admin/appareils/form}">Ajouter un appareil</a>
+        </div>
+
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Problème</th>
+                    <th>Client</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="appareil : ${appareils}">
+                    <td th:text="${appareil.id}">1</td>
+                    <td th:text="${appareil.nom}">Téléphone</td>
+                    <td th:text="${appareil.probleme}">ECRAN_CASSE</td>
+                    <td th:text="${appareil.client.nom + ' ' + appareil.client.prenom}">Client</td>
+                    <td>
+                        <a th:href="@{'/admin/appareils/form?id=' + ${appareil.id}}" class="btn btn-sm btn-primary">Modifier</a>
+                        <a th:href="@{'/admin/appareils/delete/' + ${appareil.id}}"
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm('Confirmer la suppression de cet appareil ?')">
+                            Supprimer
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</html>
