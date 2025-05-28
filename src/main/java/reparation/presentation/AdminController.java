@@ -288,68 +288,9 @@ public class AdminController {
 
 	// ============== METHODES DE MODIFICATION (Old URLs for compatibility)
 	// ==============
-	@GetMapping("/clients/edit/{id}")
-	public String formModifierClient(@PathVariable Long id, Model model, HttpSession session) {
-		if (!isAdminLoggedIn(session)) {
-			return "redirect:/admin/login";
-		}
-		model.addAttribute("client", gestionClient.rechercher(id));
-		return "admin/clients/form";
-	}
+	
 
-	@GetMapping("/appareils/edit/{id}")
-	public String formModifierAppareil(@PathVariable Long id, Model model, HttpSession session) {
-		if (!isAdminLoggedIn(session)) {
-			return "redirect:/admin/login";
-		}
-		model.addAttribute("appareil", gestionAppareil.rechercher(id));
-		model.addAttribute("clients", gestionClient.lister());
-		return "admin/appareils/form";
-	}
-
-	@GetMapping("/reparateurs/edit/{id}")
-	public String formModifierReparateur(@PathVariable Long id, Model model, HttpSession session) {
-		if (!isAdminLoggedIn(session)) {
-			return "redirect:/admin/login";
-		}
-		model.addAttribute("reparateur", gestionReparateur.rechercher(id));
-		return "admin/reparateurs/form";
-	}
-
-	@GetMapping("/reparations/edit/{id}")
-	public String formModifierReparation(@PathVariable Long id, Model model, HttpSession session) {
-		if (!isAdminLoggedIn(session)) {
-			return "redirect:/admin/login";
-		}
-		model.addAttribute("reparation", gestionReparation.rechercher(id));
-		model.addAttribute("clients", gestionClient.lister());
-		model.addAttribute("appareils", gestionAppareil.lister());
-		model.addAttribute("reparateurs", gestionReparateur.lister());
-		return "admin/reparations/form";
-	}
-
-	@PostMapping("/clients/update")
-	public String modifierClient(@Valid @ModelAttribute Client client, BindingResult result, HttpSession session) {
-		return enregistrerClient(client, result, session);
-	}
-
-	@PostMapping("/appareils/update")
-	public String modifierAppareil(@Valid @ModelAttribute Appareil appareil, BindingResult result, Model model,
-			HttpSession session) {
-		return enregistrerAppareil(appareil, result, model, session);
-	}
-
-	@PostMapping("/reparateurs/update")
-	public String modifierReparateur(@Valid @ModelAttribute Reparateur reparateur, BindingResult result,
-			HttpSession session) {
-		return enregistrerReparateur(reparateur, result, session);
-	}
-
-	@PostMapping("/reparations/update")
-	public String modifierReparation(@Valid @ModelAttribute Reparation reparation, BindingResult result, Model model,
-			HttpSession session) {
-		return enregistrerReparation(reparation, result, model, session);
-	}
+	
 
 	// ============== METHODES DE SUPPRESSION ==============
 	@GetMapping("/clients/delete/{id}")
