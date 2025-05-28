@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import reparation.dao.entities.Admin;
 
 public interface AdminRepository extends JpaRepository<Admin, Long> {
-    Optional<Admin> findByLogin(String login);
     Optional<Admin> findByLoginAndPassword(String login, String password);
 
 }

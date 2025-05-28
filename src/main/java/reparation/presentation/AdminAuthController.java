@@ -31,9 +31,11 @@ public class AdminAuthController {
         }
     }
 
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/admin/login";
+  
+    	session.invalidate();
+        return "redirect:/role-selection";
     }
+
 }

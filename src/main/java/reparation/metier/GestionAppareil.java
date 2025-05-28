@@ -37,7 +37,4 @@ public class GestionAppareil {
         return ar.findAll();
     }
     
-    public List<Appareil> listerParReparateur(Long reparateurId) {
-        return ar.findByReparateurs_Id(reparateurId);
-    }
 }

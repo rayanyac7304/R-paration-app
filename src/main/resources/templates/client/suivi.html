@@ -1,47 +1,57 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="layout/base :: layout(content = ~{::section})">
+      th:replace="layout/base-client :: layout(~{::section})">
 <section>
-    <div class="container mt-5">
-        <h2 class="mb-4">Suivi de votre réparation</h2>
+    <div class="container-fluid">
 
-        <form th:action="@{/client/suivi}" method="get" class="row g-3">
-            <div class="col-md-8">
-                <input type="text" name="code" class="form-control" placeholder="Entrez votre code de suivi" required>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0 text-white">Détails de la réparation</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <h6 class="text-muted mb-2">Client</h6>
+                                    <p class="fs-5" th:text="${client.nom} + ' ' + ${client.prenom}"></p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h6 class="text-muted mb-2">Appareil</h6>
+                                    <p class="fs-5" th:text="${appareil.nom}"></p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h6 class="text-muted mb-2">Problème signalé</h6>
+                                    <p class="fs-5" th:text="${appareil.probleme}"></p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <h6 class="text-muted mb-2">Statut</h6>
+                                    <span class="badge bg-primary fs-6 p-2" th:text="${reparation.statut}"></span>
+                                </div>
+                                
+                                <div class="mb-4" th:if="${reparation.reparateur != null}">
+                                    <h6 class="text-muted mb-2">Réparateur assigné</h6>
+                                    <p class="fs-5" th:text="${reparateur.nom} + ' ' + ${reparateur.prenom}"></p>
+                                </div>
+                                
+                                <div class="mb-4" th:if="${reparation.prix != null}">
+                                    <h6 class="text-muted mb-2">Prix</h6>
+                                    <p class="fs-5" th:text="${reparation.prix} + ' DH'"></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4">
-                <button type="submit" class="btn btn-primary w-100">Suivre</button>
-            </div>
-        </form>
-
-        <div class="mt-4" th:if="${reparation != null}">
-            <h4>Détails de la Réparation</h4>
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <strong>Appareil :</strong>
-                    <span th:text="${reparation.appareil.nom}">-</span>
-                </li>
-                <li class="list-group-item">
-                    <strong>Problème :</strong>
-                    <span th:text="${reparation.probleme}">-</span>
-                </li>
-                <li class="list-group-item">
-                    <strong>Statut :</strong>
-                    <span th:text="${reparation.statut}">-</span>
-                </li>
-                <li class="list-group-item">
-                    <strong>Date Dépôt :</strong>
-                    <span th:text="${#dates.format(reparation.dateDepot, 'dd/MM/yyyy')}">-</span>
-                </li>
-                <li class="list-group-item">
-                    <strong>Coût :</strong>
-                    <span th:text="${reparation.cout} + ' MAD'">-</span>
-                </li>
-            </ul>
-        </div>
-
-        <div class="alert alert-danger mt-4" th:if="${notFound}">
-            Aucune réparation trouvée pour ce code.
         </div>
     </div>
 </section>

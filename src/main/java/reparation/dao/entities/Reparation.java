@@ -2,8 +2,9 @@ package reparation.dao.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import reparation.dao.entities.enums.Probleme;
 import reparation.dao.entities.enums.Statut;
+
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -21,8 +22,7 @@ public class Reparation {
     @Enumerated(EnumType.STRING)
     private Statut statut;
 
-
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String code;
 
     @ManyToOne
@@ -33,6 +33,10 @@ public class Reparation {
 
     @ManyToOne
     private Client client;
-   
-	
+    
+
+    @Column(nullable = false)
+    private LocalDateTime dateReparation;
+
+  
 }

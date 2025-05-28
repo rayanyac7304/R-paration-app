@@ -12,7 +12,7 @@ import reparation.metier.*;
 import java.security.Principal;
 import java.util.List;
 import java.util.ArrayList;
-
+/*
 @Controller
 @RequestMapping("/reparateur")
 @AllArgsConstructor
@@ -265,4 +265,4 @@ public class ReparateurController {
         Reparateur reparateur = gestionReparateur.rechercherParLogin(login);
         return appareil.getReparateurs().contains(reparateur);
     }
-}
+}*/

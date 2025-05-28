@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import reparation.dao.entities.Reparateur;
+import reparation.dao.entities.Reparation;
 import reparation.dao.repositories.ReparateurRepository;
 
 import java.util.List;
@@ -39,5 +40,7 @@ public class GestionReparateur {
     public Reparateur rechercherParLogin(String login) {
         return rr.findByLogin(login).orElseThrow(() -> new RuntimeException("Réparateur non trouvé"));
     }
+    
+   
     
 }

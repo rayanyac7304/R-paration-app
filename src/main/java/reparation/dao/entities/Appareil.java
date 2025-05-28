@@ -25,8 +25,6 @@ public class Appareil {
     @Enumerated(EnumType.STRING)
     private Probleme probleme;
 
-    @ManyToMany
-    private List<Reparateur> reparateurs;
 
     
     public void setNom(String nom) {

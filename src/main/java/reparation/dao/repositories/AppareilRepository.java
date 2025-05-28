@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface AppareilRepository extends JpaRepository<Appareil, Long> {
     List<Appareil> findByClientId(Long clientId);
-    List<Appareil> findByReparateurs_Id(Long reparateurId);
 }

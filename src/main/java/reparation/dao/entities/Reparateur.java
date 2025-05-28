@@ -28,9 +28,6 @@ public class Reparateur {
     @Column(nullable = false, unique = true, length = 20)
     private String cin;
     
-    @ManyToMany(mappedBy = "reparateurs")
-    private List<Client> clients;
+   
     
-    @ManyToMany(mappedBy = "reparateurs")
-    private List<Appareil> appareils;
 }

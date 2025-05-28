@@ -22,12 +22,6 @@ public class Client {
     @Column(nullable = false, length = 20)
     private String telephone;
 
-    @ManyToMany
-    @JoinTable(
-        name = "reparateur_client",
-        joinColumns = @JoinColumn(name = "client_id"),
-        inverseJoinColumns = @JoinColumn(name = "reparateur_id")
-    )
-    private List<Reparateur> reparateurs;
+   
 
 }

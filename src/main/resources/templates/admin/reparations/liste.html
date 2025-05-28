@@ -1,42 +1,90 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="layout/base :: layout(content = ~{::section})">
+      th:replace="layout/base-admin :: layout(content = ~{::section})">
 <section>
     <div class="container mt-5">
+
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2>Liste des Réparations</h2>
             <a class="btn btn-success" th:href="@{/admin/reparations/form}">Ajouter une réparation</a>
         </div>
 
+        <!-- Formulaire de filtre -->
+        <form class="row g-3 mb-4" method="get" th:action="@{/admin/reparations}">
+    <div class="col-md-4">
+        <label for="statut" class="form-label">Filtrer par Statut</label>
+        <select class="form-select" id="statut" name="statut">
+            <option th:value="''" selected>-- Tous les statuts --</option>
+            <option th:each="s : ${statuts}"
+                    th:value="${s}"
+                    th:text="${s}"
+                    th:selected="${s} == ${param.statut}"></option>
+        </select>
+    </div>
+
+    <div class="col-md-4">
+        <label for="clientId" class="form-label">Filtrer par Client</label>
+        <select class="form-select" id="clientId" name="clientId">
+            <option th:value="''" selected>-- Tous les clients --</option>
+            <option th:each="c : ${clients}"
+                    th:value="${c.id}"
+                    th:text="${c.nom + ' ' + c.prenom}"
+                    th:selected="${c.id} == ${param.clientId}"></option>
+        </select>
+    </div>
+
+    <div class="col-md-4">
+        <label for="reparateurId" class="form-label">Filtrer par Réparateur</label>
+        <select class="form-select" id="reparateurId" name="reparateurId">
+            <option th:value="''" selected>-- Tous les réparateurs --</option>
+            <option th:each="r : ${reparateurs}"
+                    th:value="${r.id}"
+                    th:text="${r.nom + ' ' + r.prenom}"
+                    th:selected="${r.id} == ${param.reparateurId}"></option>
+        </select>
+    </div>
+
+    <div class="col-md-12 d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary me-2">Filtrer</button>
+        <a class="btn btn-secondary" th:href="@{/admin/reparations}">Réinitialiser</a>
+    </div>
+</form>
+
+
+        <!-- Tableau -->
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Appareil</th>
-                <th>Client</th>
-                <th>Réparateur</th>
-                <th>Statut</th>
-                <th>Prix</th>
-                <th>Actions</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Code</th>
+                    <th>Appareil</th>
+                    <th>Client</th>
+                    <th>Réparateur</th>
+                    <th>Statut</th>
+                    <th>Prix</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
             </thead>
             <tbody>
-            <tr th:each="rep : ${reparations}">
-                <td th:text="${rep.id}"></td>
-                <td th:text="${rep.appareil.marque + ' ' + rep.appareil.modele}"></td>
-                <td th:text="${rep.appareil.client.nom + ' ' + rep.appareil.client.prenom}"></td>
-                <td th:text="${rep.reparateur.nom + ' ' + rep.reparateur.prenom}"></td>
-                <td th:text="${rep.statut}"></td>
-                <td th:text="${rep.prix + ' MAD'}"></td>
-                <td>
-                    <a th:href="@{'/admin/reparations/form?id=' + ${rep.id}}" class="btn btn-sm btn-primary">Modifier</a>
-                    <a th:href="@{'/admin/reparations/delete/' + ${rep.id}}"
-                       class="btn btn-sm btn-danger"
-                       onclick="return confirm('Confirmer la suppression de cette réparation ?')">
-                        Supprimer
-                    </a>
-                </td>
-            </tr>
+                <tr th:each="rep : ${reparations}">
+                    <td th:text="${rep.id}"></td>
+                    <td th:text="${rep.code}"></td>
+                    <td th:text="${rep.appareil != null ? rep.appareil.nom + ' - ' + rep.appareil.probleme : 'N/A'}"></td>
+                    <td th:text="${rep.client != null ? rep.client.nom + ' ' + rep.client.prenom : 'N/A'}"></td>
+                    <td th:text="${rep.reparateur != null ? rep.reparateur.nom + ' ' + rep.reparateur.prenom : 'N/A'}"></td>
+                    <td th:text="${rep.statut}"></td>
+                    <td th:text="${rep.prix != null ? rep.prix + ' MAD' : 'N/A'}"></td>
+                    <td th:text="${rep.dateReparation != null ? #temporals.format(rep.dateReparation, 'dd/MM/yyyy HH:mm') : 'N/A'}"></td>
+                    <td>
+                        <a th:href="@{'/admin/reparations/form?id=' + ${rep.id}}" class="btn btn-sm btn-primary">Modifier</a>
+                        <a th:href="@{'/admin/reparations/delete/' + ${rep.id}}"
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm('Confirmer la suppression de cette réparation ?')">
+                            Supprimer
+                        </a>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

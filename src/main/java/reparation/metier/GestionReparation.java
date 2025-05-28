@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import reparation.dao.entities.Reparateur;
 import reparation.dao.entities.Reparation;
+import reparation.dao.entities.enums.Statut;
 import reparation.dao.repositories.ReparationRepository;
 
 import java.util.List;
@@ -49,13 +50,22 @@ public class GestionReparation {
                 .sum();
     }
   
-    /*
-    public List<Reparation> listerParReparateurId(Long reparateurId) {
-        return ReparationRepository.findByReparateurId(reparateurId);
-    }*/
+   
+    public List<Reparation> listerParStatut(Statut statut) {
+        return rr.findByStatutOrderByDateReparationDesc(statut);
+    }
+
+    public List<Reparation> listerParClient(Long clientId) {
+        return rr.findByClient_Id(clientId);
+    }
+
 
 
     public Optional<Reparation> rechercherParCode(String code) {
         return rr.findByCode(code);
+    }
+    
+    public List<Reparation> listerParDateReparationDesc() {
+        return rr.findAllByOrderByDateReparationDesc();
     }
 }

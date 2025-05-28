@@ -38,7 +38,5 @@ public class GestionClient {
         return cr.findAll();
     }
     
-    public List<Client> listerParReparateur(Long reparateurId) {
-        return cr.findByReparateurs_Id(reparateurId);
-    }
+  
 }

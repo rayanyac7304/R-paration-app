@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="layout/base :: layout(content = ~{::section})">
+      th:replace="layout/base-admin :: layout(content = ~{::section})">
 <section>
     <div class="container mt-5">
         <h2 th:text="${appareil.id} != null ? 'Modifier Appareil' : 'Ajouter un nouvel appareil'">Appareil</h2>

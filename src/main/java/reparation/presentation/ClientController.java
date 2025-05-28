@@ -1,5 +1,6 @@
 package reparation.presentation;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,50 +11,45 @@ import reparation.metier.GestionReparation;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/client") // ⬅️ point d'entrée client
+@RequestMapping("/client")
 @AllArgsConstructor
 public class ClientController {
 
     private final GestionReparation gestionReparation;
 
-    // Accueil général (redirige vers login)
-    @GetMapping("/")
-    public String accueil() {
-        return "login"; // Ce n'est pas spécifique au client
+    // Method to check if client is logged in
+    private boolean isClientLoggedIn(HttpSession session) {
+        return session.getAttribute("reparation") != null;
     }
 
-    // Interface client principale
-    @GetMapping("")
-    public String pageClient() {
-        return "client/suivi";
-    }
 
-    // Consultation du statut de réparation par code (GET)
+   
     @GetMapping("/suivi")
-    public String consulterReparation(@RequestParam(required = false) String code, Model model) {
-        if (code == null || code.trim().isEmpty()) {
-            model.addAttribute("erreur", "Veuillez saisir un code de suivi valide");
-            return "client/suivi";
+    public String listerReparation(HttpSession session, Model model) {
+        Reparation reparationSession = (Reparation) session.getAttribute("reparation");
+
+        if (reparationSession == null) {
+            return "redirect:/client/login";
         }
 
-        Optional<Reparation> reparationOpt = gestionReparation.rechercherParCode(code.trim());
+        // Optionnel : rafraîchir les données si elles peuvent changer entre temps
+        Optional<Reparation> reparationOpt = gestionReparation.rechercherParCode(reparationSession.getCode());
 
         if (reparationOpt.isPresent()) {
             Reparation reparation = reparationOpt.get();
+            session.setAttribute("reparation", reparation); // Si tu veux maintenir la session à jour
+
             model.addAttribute("reparation", reparation);
             model.addAttribute("client", reparation.getClient());
             model.addAttribute("appareil", reparation.getAppareil());
             model.addAttribute("reparateur", reparation.getReparateur());
-            return "client/resultat";
-        } else {
-            model.addAttribute("erreur", "Aucune réparation trouvée avec ce code : " + code);
             return "client/suivi";
         }
+
+        // Si le code n'existe plus (supprimé ?)
+        session.invalidate();
+        model.addAttribute("error", "Réparation introuvable. Veuillez ressaisir le code.");
+        return "client/login";
     }
 
-    // Consultation par code (POST)
-    @PostMapping("/suivi")
-    public String consulterReparationPost(@RequestParam String code, Model model) {
-        return consulterReparation(code, model);
-    }
 }

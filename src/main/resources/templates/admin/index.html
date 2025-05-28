@@ -1,39 +1,116 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="layout/base :: layout(content = ~{::section})">
+      th:replace="layout/base-admin :: layout(content = ~{::section})">
       
 <section>
+    <div class="container-fluid">
+        <!-- Header section -->
+        <div class="section-header">
+            <h2><i class="fas fa-tachometer-alt me-2"></i>Tableau de bord</h2>
+        </div>
 
-    <div class="container mt-5">
-        <h2 class="mb-4">Tableau de bord - Admin</h2>
+        <!-- Stats cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-xl-3 col-md-6">
+                <div class="dashboard-card">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h5><i class="fas fa-wrench me-2"></i>Réparations</h5>
+                            <p class="fs-4 fw-bold text-primary mb-0" th:text="${totalReparations}">0</p>
+                        </div>
+                        <div class="text-primary opacity-75">
+                            <i class="fas fa-wrench fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6">
+                <div class="dashboard-card">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h5><i class="fas fa-users me-2"></i>Clients</h5>
+                            <p class="fs-4 fw-bold text-success mb-0" th:text="${totalClients}">0</p>
+                        </div>
+                        <div class="text-success opacity-75">
+                            <i class="fas fa-users fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6">
+                <div class="dashboard-card">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h5><i class="fas fa-user-cog me-2"></i>Réparateurs</h5>
+                            <p class="fs-4 fw-bold text-warning mb-0" th:text="${totalReparateurs}">0</p>
+                        </div>
+                        <div class="text-warning opacity-75">
+                            <i class="fas fa-user-cog fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6">
+                <div class="dashboard-card">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h5><i class="fas fa-coins me-2"></i>Gains totaux</h5>
+                            <p class="fs-4 fw-bold text-info mb-0">
+                                <span th:text="${gainTotal}">0</span> MAD
+                            </p>
+                        </div>
+                        <div class="text-info opacity-75">
+                            <i class="fas fa-coins fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <div class="row text-center">
-            <div class="col-md-3 mb-3">
-                <div class="card shadow-sm p-3">
-                    <h5>Réparations</h5>
-                    <p class="fs-4 fw-bold text-primary" th:text="${totalReparations}">0</p>
+        <!-- Two columns layout -->
+        <div class="row g-4">
+            <!-- Quick Actions -->
+            <div class="col-lg-6">
+                <div class="form-container h-100">
+                    <h4 class="mb-3"><i class="fas fa-plus-circle me-2"></i>Actions rapides</h4>
+                    <div class="d-grid gap-2">
+                        <a th:href="@{/admin/reparations/form}" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Nouvelle réparation
+                        </a>
+                        <a th:href="@{/admin/clients/form}" class="btn btn-success">
+                            <i class="fas fa-user-plus me-2"></i>Nouveau client
+                        </a>
+                        <a th:href="@{/admin/appareils/form}" class="btn btn-info">
+                            <i class="fas fa-mobile-alt me-2"></i>Nouvel appareil
+                        </a>
+                        <a th:href="@{/admin/reparateurs/form}" class="btn btn-warning">
+                            <i class="fas fa-user-plus me-2"></i>Nouveau réparateur
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-3 mb-3">
-                <div class="card shadow-sm p-3">
-                    <h5>Clients</h5>
-                    <p class="fs-4 fw-bold text-success" th:text="${totalClients}">0</p>
+            
+            <!-- Réparations récentes -->
+<div class="col-lg-6">
+    <div class="form-container h-100">
+        <h4 class="mb-3"><i class="fas fa-tools me-2"></i>Réparations récentes</h4>
+        <div class="list-group">
+            <div th:each="r : ${reparationsRecentes}">
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>
+                        Réparation <strong th:text="${r.code}">#0000</strong> - 
+                        <span class="badge bg-secondary" th:text="${r.statut}">EN_ATTENTE</span>
+                    </span>
+                    <small class="text-muted" th:text="${r.temps}">il y a X</small>
                 </div>
             </div>
-            <div class="col-md-3 mb-3">
-                <div class="card shadow-sm p-3">
-                    <h5>Réparateurs</h5>
-                    <p class="fs-4 fw-bold text-warning" th:text="${totalReparateurs}">0</p>
-                </div>
-            </div>
-            <div class="col-md-3 mb-3">
-                <div class="card shadow-sm p-3">
-                    <h5>Gains totaux</h5>
-                    <p class="fs-4 fw-bold text-danger">
-                        <span th:text="${gainTotal}">0</span> MAD
-                    </p>
-                </div>
-            </div>
+        </div>
+    </div>
+</div>
+
         </div>
     </div>
 </section>
